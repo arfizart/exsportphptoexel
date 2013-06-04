@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Exsportphptoexel by arfizart</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Exsportphptoexel</h1>
+        <p>fileexsport</p>
+
+        <p class="view"><a href="https://github.com/arfizart/exsportphptoexel">View the Project on GitHub <small>arfizart/exsportphptoexel</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/arfizart/exsportphptoexel/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/arfizart/exsportphptoexel/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/arfizart/exsportphptoexel">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>&lt;?php
+// koneksi database
+$db = "bfb";</p>
+
+<p>mysql_connect("localhost","root","");
+mysql_select_db("$db");</p>
+
+<p>$format=$_GET['format'];
+$filename = "Exsport_siswa-".$format.".xls";</p>
+
+<p>// nilai awal counter untuk jumlah data yang sukses dan yang gagal diimport
+$sukses = 0;
+$gagal = 0;
+$table = "siswa";
+if($format=="semua"){
+$here="";
+}else{
+$here= "Where id_jurusan='$format'";
+}</p>
+
+<p>//jumlah kolom
+$jkolom=0;</p>
+
+<p>//generate kolom
+$q= mysql_query("select * from $table $here ");
+$r=mysql_fetch_assoc($q);
+foreach ($r as $head=&gt;$nilai) {
+$header .=$head." \t"; //print header table
+$jkolom++;
+}
+$header .= "\n";</p>
+
+<p>//generate baris
+$result= mysql_query("select * from $table $here");
+while ($row=mysql_fetch_array($result)) {
+for ($x=0; $x&lt;$jkolom; $x++) {
+$content .=$row[$x]." \t ";
+}
+$content .= $row[$x]." \n ";
+}</p>
+
+<p>$output .= $header.$content;
+header('Content-type:application/ms-excel');
+header('Content-Disposition: attachment; filename='.$filename);
+echo $output;</p>
+
+<p>?&gt;</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/arfizart">arfizart</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
